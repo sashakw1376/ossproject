@@ -25,7 +25,6 @@ from pytest_mock import MockerFixture
 
 from cve_bin_tool.checkers import __all__ as all_test_name
 from cve_bin_tool.cvedb import CVEDB
-from cve_bin_tool.util import windows_fixup
 from cve_bin_tool.version_scanner import VersionScanner
 
 # load test data
@@ -151,7 +150,7 @@ class TestScanner:
         for filename in filenames:
             with tempfile.NamedTemporaryFile(
                 "w+b",
-                suffix=windows_fixup(filename),
+                suffix=filename,
                 dir=self.mapping_test_dir,
                 delete=False,
             ) as f:
@@ -234,7 +233,7 @@ class TestScanner:
                 dirpath.mkdir()
         # Check if we've already made a condensed version of the file, if we
         # have, we're done.
-        condensed_path = condensed_dir / (windows_fixup(package_name) + ".tar.gz")
+        condensed_path = condensed_dir / (package_name + ".tar.gz")
         if condensed_path.is_file():
             return str(condensed_path)
         # Download the file if we don't have a condensed version of it and we

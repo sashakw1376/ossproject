@@ -8,7 +8,6 @@ import importlib
 import subprocess
 
 from cve_bin_tool.checkers import __all__ as all_test_name
-from cve_bin_tool.util import windows_fixup
 
 
 # Test to check condensed files are committed according to the package test data of checkers
@@ -23,7 +22,7 @@ def test_condensed_downloads():
         for package_data in package_test_data:
             package_names.append(
                 "test/condensed-downloads/"
-                + windows_fixup(package_data["package_name"])
+                + package_data["package_name"]
                 + ".tar.gz"
             )
 
