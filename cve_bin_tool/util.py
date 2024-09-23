@@ -609,3 +609,10 @@ def decode_cpe22(cpe22) -> list:
     vendor, product, version = cpe[2], cpe[3], cpe[4]
     # Return available data, convert empty fields to None
     return [vendor or None, product or None, version or None]
+
+#SASHA
+def windows_filename_check(filename):
+    """
+    Replace filename characters that are out of character set for Windows/Mac
+    """
+    return filename.replace("\\","_").replace(":","_").replace("*","_").replace("?","_").replace("\"","_").replace("<","_").replace(">","_").replace("|","_")

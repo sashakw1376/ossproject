@@ -19,7 +19,7 @@ import unittest
 import unittest.mock
 from pathlib import Path
 from test.utils import LONG_TESTS, download_file
-
+from cve_bin_tool.util import windows_filename_check
 import pytest
 from pytest_mock import MockerFixture
 
@@ -150,7 +150,7 @@ class TestScanner:
         for filename in filenames:
             with tempfile.NamedTemporaryFile(
                 "w+b",
-                suffix=filename,
+                suffix=windows_filename_check(filename), #SASHA
                 dir=self.mapping_test_dir,
                 delete=False,
             ) as f:
@@ -181,6 +181,7 @@ class TestScanner:
                 # Remove until .extracted plus 1 for the '/' after it. This will
                 # give us the path to the file relative to the root of the
                 # archive it came from
+                # SASHA: TRY 1
                 try:
                     filename_path = filename[
                         filename.index(dot_extracted) + len(dot_extracted) + 1 :
@@ -233,7 +234,7 @@ class TestScanner:
                 dirpath.mkdir()
         # Check if we've already made a condensed version of the file, if we
         # have, we're done.
-        condensed_path = condensed_dir / (package_name + ".tar.gz")
+        condensed_path = condensed_dir / (windows_filename_check(package_name) + ".tar.gz") #SASHA
         if condensed_path.is_file():
             return str(condensed_path)
         # Download the file if we don't have a condensed version of it and we
