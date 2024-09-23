@@ -21,9 +21,7 @@ def test_condensed_downloads():
     for package_test_data in package_test_data_list:
         for package_data in package_test_data:
             package_names.append(
-                "test/condensed-downloads/"
-                + package_data["package_name"]
-                + ".tar.gz"
+                "test/condensed-downloads/" + package_data["package_name"] + ".tar.gz"
             )
 
     condensed_downloads = subprocess.run(

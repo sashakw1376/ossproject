@@ -150,7 +150,7 @@ class TestScanner:
         for filename in filenames:
             with tempfile.NamedTemporaryFile(
                 "w+b",
-                suffix=windows_filename_check(filename), #SASHA
+                suffix=windows_filename_check(filename),  # SASHA
                 dir=self.mapping_test_dir,
                 delete=False,
             ) as f:
@@ -234,7 +234,9 @@ class TestScanner:
                 dirpath.mkdir()
         # Check if we've already made a condensed version of the file, if we
         # have, we're done.
-        condensed_path = condensed_dir / (windows_filename_check(package_name) + ".tar.gz") #SASHA
+        condensed_path = condensed_dir / (
+            windows_filename_check(package_name) + ".tar.gz"
+        )  # SASHA
         if condensed_path.is_file():
             return str(condensed_path)
         # Download the file if we don't have a condensed version of it and we
