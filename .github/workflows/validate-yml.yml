@@ -1,0 +1,44 @@
+name: Validate mismatch_relations.yml
+
+on:
+  push:
+    paths:
+      - data/**/mismatch_relations.yml
+  workflow_dispatch:
+
+jobs:
+  validate-yml:
+    runs-on: ${{ github.repository_owner == 'intel' && 'intel-ubuntu-latest' || 'ubuntu-latest' }}
+
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@5c7944e73c4c2a096b17a9cb74d65b6c2bbafbde # v2.9.1
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install pyyaml
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Get Modified mismatch_relations.yml Files
+        id: get-modified-files
+        run: |
+          git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} | grep '^mismatch_data/.*/mismatch_relations.yml$' > modified_files.txt
+
+      - name: Validate Modified YAML Files
+        if: success()
+        run: |
+          if [ -s modified_files.txt ]; then
+            python .github/workflows/yaml_rules.py $(cat modified_files.txt)
+          else
+            echo "No modified mismatch_relations.yml files to validate."
+          fi

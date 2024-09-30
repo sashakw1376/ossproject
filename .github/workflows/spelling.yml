@@ -1,0 +1,28 @@
+name: Spell checking
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  spelling:
+    name: Spell checking
+    permissions:
+      contents: read
+      pull-requests: read
+      actions: read
+    runs-on: ${{ github.repository_owner == 'intel' && 'intel-ubuntu-latest' || 'ubuntu-latest' }}
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@5c7944e73c4c2a096b17a9cb74d65b6c2bbafbde # v2.9.1
+      with:
+        egress-policy: audit
+
+    - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+    - uses: check-spelling/check-spelling@v0.0.22
+      with:
+        extra_dictionaries:
+          cspell:python/src/python/python.txt
+          cspell:public-licenses/src/generated/public-licenses.txt
+          cspell:filetypes/filetypes.txt
+          cspell:python/src/python/python-lib.txt
