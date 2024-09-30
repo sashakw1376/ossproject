@@ -6,7 +6,7 @@ Test to check if condensed downloads are committed
 """
 import importlib
 import subprocess
-
+from cve_bin_tool.util import windows_filename_check
 from cve_bin_tool.checkers import __all__ as all_test_name
 
 
@@ -21,7 +21,9 @@ def test_condensed_downloads():
     for package_test_data in package_test_data_list:
         for package_data in package_test_data:
             package_names.append(
-                "test/condensed-downloads/" + package_data["package_name"] + ".tar.gz"
+                "test/condensed-downloads/"
+                + windows_filename_check(package_data["package_name"])
+                + ".tar.gz"
             )
 
     condensed_downloads = subprocess.run(
