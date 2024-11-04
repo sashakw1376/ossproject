@@ -19,7 +19,7 @@ jobs:
         egress-policy: audit
 
     - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-    - uses: check-spelling/check-spelling@v0.0.22
+    - uses: check-spelling/check-spelling@v0.0.24
       with:
         extra_dictionaries:
           cspell:python/src/python/python.txt
