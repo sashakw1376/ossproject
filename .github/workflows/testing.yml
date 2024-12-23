@@ -339,7 +339,7 @@ jobs:
           test/test_cvedb.py
       - name: Upload code coverage to codecov
         if: env.sbom != 'true'
-        uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 # v4.5.0
+        uses: codecov/codecov-action@1e68e06f1dbfde0e4cefc87efeba9e4643565303 # v5.1.2
         with:
           files: ./coverage.xml
           flags: longtests
@@ -583,7 +583,7 @@ jobs:
       - name: Test PDF generation on Windows
         run: pytest test/test_output_engine.py -k test_output_pdf --cov --cov-append --cov-report=xml --durations=50
       - name: Upload code coverage to codecov
-        uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 # v4.5.0
+        uses: codecov/codecov-action@1e68e06f1dbfde0e4cefc87efeba9e4643565303 # v5.1.2
         with:
           files: ./coverage.xml
           flags: win-longtests
